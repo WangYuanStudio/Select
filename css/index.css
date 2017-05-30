@@ -1,0 +1,96 @@
+/*search*/
+.searchContainer{
+	display: flex;
+	height: 4.3rem;
+	border-radius: 3px;
+	width: calc(100% - .8rem);
+	background-color: #ffffff;
+	box-shadow: 0px 5px 5px 0px rgba(0,0,0,.3);
+	margin: 1.2rem auto 0 auto;
+	flex-wrap: nowrap;
+	justify-content: flex-start;
+	align-items: center;
+}
+.searchContainer .logo{
+	text-align: center;
+	font-size: 1.1rem;
+	height: 1.1rem;
+	order:1;
+	width: 5.7rem;
+	font-weight: bold;
+	line-height: 1.1rem;
+}
+.searchContainer .searchInput{
+	order: 2;
+	border:0px;
+	color: #c7c7cd;
+	font-size: 1.6rem;
+	width: calc(100% - 13rem);
+	margin: 0 0.7rem 0 0.7rem;
+	outline: 0px;
+	font-weight: bold;
+}
+.searchContainer .searchInputSubmit{
+	cursor: pointer;
+	background-color: transparent;
+	border:0px;
+	outline: 0px;
+	order: 3;
+	font-size: 1.6rem;
+}
+
+/*createPollContainer*/
+.createPollContainer{
+	margin: 2.9rem auto 2.6rem auto;
+	width: calc(100% - .8rem);
+	display: flex;
+	flex-wrap: wrap;
+	justify-content:space-around;
+}
+.createPollContainer .createPollContainerTitle{
+	font-size: 1.3rem;
+	font-family: Adobe 黑体 Std;
+	color: #6d6d6d;
+	margin: 0 0 0 0.8rem;
+	width: calc(100% - 0.8rem);
+	height: 1.3rem;
+	line-height: 1.3rem;
+}
+.createPollContainer .PollType{
+	height: 7.6rem;
+	width: 5.6rem;
+	cursor: pointer;
+	margin: 2.3rem 0 0 0;
+}
+.createPollContainer .PollType .iconContainer{
+	width: 5.6rem;
+	height: 5.6rem;
+	border-radius: 50%;
+	background-color: #ff5252;
+	text-align: center;
+	line-height: 6.8rem;
+}
+.createPollContainer .public .iconContainer{
+	background-color: #40c4ff;
+}
+.createPollContainer .PollType .iconContainer img{
+	height: 2.3rem;
+}
+.createPollContainer .PollType .PollText{
+	font-size: 1.2rem;
+	height: 1.2rem;
+	line-height: 1.2rem;
+	color: #313131;
+	font-weight: bold;
+	font-family: Adobe 黑体 Std;
+	text-align: center;
+}
+
+/*voteItem*/
+.voteItem{
+	margin: 0 auto 1.0rem auto;
+	width: calc(100% - .8rem);
+	height: 13.7rem;
+	background-color: #ffffff;
+	box-shadow: 0px 5px 5px 0px rgba(0,0,0,.3);
+}
