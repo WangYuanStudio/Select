@@ -90,7 +90,48 @@
 .voteItem{
 	margin: 0 auto 1.0rem auto;
 	width: calc(100% - .8rem);
-	height: 13.7rem;
 	background-color: #ffffff;
 	box-shadow: 0px 5px 5px 0px rgba(0,0,0,.3);
+	border-radius: 3px;
+}
+.voteItem .cornerLabel{
+    width: 0;
+    height: 0;
+    border-top: 1.5rem solid #40c4ff;
+    border-right: 1.5rem solid transparent;
+}
+.voteItem .voteItemTitle{
+	width: calc(100% - 3.4rem);
+	font-size: 1.4rem;
+	font-family: Adobe 黑体 Std;
+	font-weight: bold;
+	margin: .6rem auto 0 auto;
+	text-overflow : ellipsis; 
+	white-space : nowrap; 
+	overflow : hidden; 
+}
+.voteItem .voteItemText{
+	width: calc(100% - 3.4rem);
+	max-height: 6.4rem;
+	font-size: 1.2rem;
+	color: #757575;
+	margin: 1.3rem auto 0 auto;
+	padding:0 1.7rem 1.8rem 1.7rem;
+	border-bottom:0.1rem solid #e0e0e0;
+	text-overflow: -o-ellipsis-lastline;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: -webkit-box;
+	-webkit-line-clamp: 4;
+	-webkit-box-orient: vertical;
+}
+.voteItem .voteMore{
+	color: #757575;
+	font-size: 1.2rem;
+	font-weight: bold;
+	padding:1.9rem 0 1.9rem 1.6rem;
+	cursor: pointer;
+}
+.pravityVoteItem .cornerLabel{
+    border-top: 1.5rem solid #ff5252;
 }
