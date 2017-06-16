@@ -1,0 +1,1227 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+	<title></title>
+	<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+	<link rel="stylesheet" type="text/css" href="style/weui.css">
+	<!-- <link rel="stylesheet" type="text/css" href="style/example.css"> -->
+	<script src="script/zepto.min.js"></script>
+</head>
+<body ontouchstart="">
+    <div class="container" id="container">
+    	<div class="weui-cell">
+            <div class="weui-cell__hd">
+            	<label class="weui-label">投票名称</label>
+            </div>
+            <div class="weui-cell__bd">
+                <input class="weui-input" type="text" placeholder="请输入名称">
+            </div>
+        </div>
+    	<div class="weui-cell">
+            <div class="weui-cell__hd">
+            	<label for="" class="weui-label">开始时间</label>
+            </div>
+            <div class="weui-cell__bd" style="position: relative;">
+                <input id="showDatePicker_on_value" class="weui-input" type="date" value="" placeholder="" time="on">
+                <input id="showDatePicker_on2_value" class="weui-input" style="position: absolute;top: 50%;transform: translateY(-50%); right: 0;width: 70px" type="" value="--:--:--" placeholder="">
+            </div>
+            <div class="showDatePicker_on" style="position: absolute; height: 100%;left: 0; width:calc(100% - 9rem);background-color: transparent;">
+            </div>
+            <div class="showDatePicker_on2" style="position: absolute; height: 100%;right: 0; width:9rem;background-color: transparent;">
+            </div>
+        </div>
+        <div class="weui-cell">
+            <div class="weui-cell__hd">
+            	<label for="" class="weui-label">结束时间</label>
+            </div>
+            <div class="weui-cell__bd" style="position: relative;">
+                <input id="showDatePicker_end_value" class="weui-input" type="date" value="" placeholder="">
+                <input id="showDatePicker_end2_value" class="weui-input" style="position: absolute;top: 50%;transform: translateY(-50%); right: 0;width: 70px" type="" value="--:--:--" placeholder="">
+            </div>
+            <div class="showDatePicker_end" style="position: absolute; height: 100%;left: 0; width:calc(100% - 9rem);background-color: transparent;">
+            </div>
+            <div class="showDatePicker_end2" style="position: absolute; height: 100%;right: 0; width:9rem;background-color: transparent;">
+            </div>
+        </div>
+        <div class="weui-cell">
+            <div class="weui-cell__hd">
+            	<label class="weui-label">可选个数</label>
+            </div>
+            <div class="weui-cell__bd">
+                <input class="weui-input" type="number" placeholder="请输入最多可投票个数">
+            </div>
+        </div>
+        <div class="weui-cells__title">添加选项</div>
+        <div class="weui-cells weui-cells_checkbox" id="label-box">
+        	<div class="weui-cell">
+	            <div class="weui-cell__hd">
+	            	<label class="weui-btn weui-btn_mini weui-btn_warn del-label" style="text-align: center;width: 30px;height: 30px;padding: 0;line-height: 30px;color: #fff;">一</label>
+	            </div>
+	            <div class="weui-cell__bd">
+	                <input class="weui-input" type="text" pattern="" placeholder="选项">
+	            </div>
+	        </div>
+	        <div class="weui-cell">
+	            <div class="weui-cell__hd">
+	            	<label class="weui-btn weui-btn_mini weui-btn_warn del-label" style="text-align: center;width: 30px;height: 30px;padding: 0;line-height: 30px;color: #fff;">一</label>
+	            </div>
+	            <div class="weui-cell__bd">
+	                <input class="weui-input" type="text" pattern="" placeholder="选项">
+	            </div>
+	        </div>
+        </div>
+        <div class="weui-cell">
+            <div class="weui-cell__hd">
+            	<label class="weui-btn weui-btn_mini weui-btn_primary add-label" style="text-align: center;width: 30px;height: 30px;padding: 0;line-height: 30px;color: #fff;">十</label>
+            </div>
+        </div>
+        <a href="javascript:;" class="weui-btn weui-btn_primary" style="width: 80%;">发布并分享</a>
+        <div class="page__ft" style="padding-top: 40px;padding-bottom: 10px;text-align: center;">
+        	<a href="javascript:home()">网园资讯工作室</a>
+    	</div>
+        <a href="javascript:;" style="display: none;" class="weui-btn weui-btn_default" id="showAndroidDialog2"></a>
+        <div id="dialogs">
+	        <div class="js_dialog" id="androidDialog2" style="opacity: 0; display: none;">
+	            <div class="weui-mask">
+	            	
+	            </div>
+	            <div class="weui-dialog weui-skin_android">
+	                <div class="weui-dialog__bd" id="err_massare">
+	                    开始时间迟于结束时间
+	                </div>
+	                <div class="weui-dialog__ft">
+	                    <a href="javascript:;" class="weui-dialog__btn weui-dialog__btn_default">取消</a>
+	                    <a href="javascript:modify();" class="weui-dialog__btn weui-dialog__btn_primary">重新选择</a>
+	                </div>
+	            </div>
+	        </div>
+        </div>
+        <script type="text/javascript" class="picker js_show">
+		    $('.showDatePicker_on').on('click', function () {
+		    	data=get_date(document.getElementById('showDatePicker_end_value'));
+		    	document.getElementById('showDatePicker_on_value').setAttribute('time','on');
+		        weui.datePicker({
+		            start: new Date().getFullYear(),
+		            end: 2050,
+		            onChange: function (result) {
+
+		            },
+		            onConfirm: function (result) {
+		            	if(result[1]<10)
+		            	{
+		            		result[1]='0'+result[1];
+		            	}
+		            	if(parseInt(result[2])<10)
+		            	{
+		            		result[2]='0'+result[2];
+		            	}
+		            	for(k=0;k<3;k++)
+		            	{
+		            		if(parseInt(result[k])>parseInt(data[k]))
+		            		{
+		            			document.getElementById('err_massare').innerHTML="开始日期迟于结束日期";
+		            			document.getElementById('showAndroidDialog2').click();
+		            			return;
+		            		}
+		            		if(parseInt(result[k])<parseInt(data[k]))
+		            		{
+		            			break;
+		            		}
+		            	}
+		            	if(parseInt(result[0])==parseInt(data[0])&&parseInt(result[1])==parseInt(data[1])&&parseInt(result[2])==parseInt(data[2]))
+		            	{
+		            		on2time=get_date2(document.getElementById('showDatePicker_on2_value'));
+		            		end2time=get_date2(document.getElementById('showDatePicker_end2_value'));
+		            		for(k=0;k<3;k++)
+			            	{
+			            		if(parseInt(on2time[k])>parseInt(end2time[k]))
+			            		{
+			            			document.getElementById('err_massare').innerHTML="开始时间迟于结束时间";
+			            			document.getElementById('showDatePicker_on_value').setAttribute('time','on2');
+			            			document.getElementById('showDatePicker_on_value').value=result[0]+'-'+result[1]+'-'+result[2];
+			            			document.getElementById('showAndroidDialog2').click();
+			            			return;
+			            		}
+			            		if(parseInt(on2time[k])<parseInt(end2time[k]))
+			            		{
+			            			break;
+			            		}
+			            	}
+		            	}
+		            	document.getElementById('showDatePicker_on_value').value=result[0]+'-'+result[1]+'-'+result[2];
+		            }
+		        });
+		    });
+		    $('.showDatePicker_on2').on('click', function () {
+		    	data2=get_date2(document.getElementById('showDatePicker_end2_value'));
+		    	document.getElementById('showDatePicker_on_value').setAttribute('time','on2');
+		        weui.picker([{
+		            label: '00时',
+		            value: 0
+		        }, {
+		            label: '01时',
+		            value: 1
+		        }, {
+		            label: '02时',
+		            value: 2
+		        },{
+		            label: '03时',
+		            disabled: true,
+		            value: 3
+		        },{
+		        	label: '04时',
+		            value: 4
+		        },{
+		        	label: '05时',
+		            value: 5
+		        },{
+		        	label: '06时',
+		            value: 6
+		        },{
+		        	label: '07时',
+		            value: 7
+		        },{
+		        	label: '08时',
+		            value: 8
+		        },{
+		        	label: '09时',
+		            value: 9
+		        },{
+		        	label: '10时',
+		            value: 10
+		        },{
+		        	label: '11时',
+		            value: 11
+		        },{
+		        	label: '12时',
+		            value: 12
+		        },{
+		        	label: '13时',
+		            value: 13
+		        },{
+		        	label: '14时',
+		            value: 14
+		        },{
+		        	label: '15时',
+		            value: 15
+		        },{
+		        	label: '16时',
+		            value: 16
+		        },{
+		        	label: '17时',
+		            value: 17
+		        },{
+		        	label: '18时',
+		            value: 18
+		        },{
+		        	label: '19时',
+		            value: 19
+		        },{
+		        	label: '20时',
+		            value: 20
+		        },{
+		        	label: '21时',
+		            value: 21
+		        },{
+		        	label: '22时',
+		            value: 22
+		        },{
+		        	label: '23时',
+		            value: 23
+		        }],
+		        [{
+		            label: '00分',
+		            value: 0
+		        }, {
+		            label: '01分',
+		            value: 1
+		        }, {
+		            label: '02分',
+		            value: 2
+		        },{
+		            label: '03分',
+		            disabled: true,
+		            value: 3
+		        },{
+		        	label: '04分',
+		            value: 4
+		        },{
+		        	label: '05分',
+		            value: 5
+		        },{
+		        	label: '06分',
+		            value: 6
+		        },{
+		        	label: '07分',
+		            value: 7
+		        },{
+		        	label: '08分',
+		            value: 8
+		        },{
+		        	label: '09分',
+		            value: 9
+		        },{
+		        	label: '10分',
+		            value: 10
+		        },{
+		        	label: '11分',
+		            value: 11
+		        },{
+		        	label: '12分',
+		            value: 12
+		        },{
+		        	label: '13分',
+		            value: 13
+		        },{
+		        	label: '14分',
+		            value: 14
+		        },{
+		        	label: '15分',
+		            value: 15
+		        },{
+		        	label: '16分',
+		            value: 16
+		        },{
+		        	label: '17分',
+		            value: 17
+		        },{
+		        	label: '18分',
+		            value: 18
+		        },{
+		        	label: '19分',
+		            value: 19
+		        },{
+		        	label: '20分',
+		            value: 20
+		        },{
+		        	label: '21分',
+		            value: 21
+		        },{
+		        	label: '22分',
+		            value: 22
+		        },{
+		        	label: '23分',
+		            value: 23
+		        },{
+		        	label: '24分',
+		            value: 24
+		        },{
+		        	label: '25分',
+		            value: 25
+		        },{
+		        	label: '26分',
+		            value: 26
+		        },{
+		        	label: '27分',
+		            value: 27
+		        },{
+		        	label: '28分',
+		            value: 28
+		        },{
+		        	label: '29分',
+		            value: 29
+		        },{
+		        	label: '30分',
+		            value: 30
+		        },{
+		        	label: '31分',
+		            value: 31
+		        },{
+		        	label: '32分',
+		            value: 32
+		        },{
+		        	label: '33分',
+		            value: 33
+		        },{
+		        	label: '34分',
+		            value: 34
+		        },{
+		        	label: '35分',
+		            value: 35
+		        },{
+		        	label: '36分',
+		            value: 36
+		        },{
+		        	label: '37分',
+		            value: 37
+		        },{
+		        	label: '38分',
+		            value: 38
+		        },{
+		        	label: '39分',
+		            value: 39
+		        },{
+		        	label: '40分',
+		            value: 40
+		        },{
+		        	label: '41分',
+		            value: 41
+		        },{
+		        	label: '42分',
+		            value: 42
+		        },{
+		        	label: '43分',
+		            value: 43
+		        },{
+		        	label: '44分',
+		            value: 44
+		        },{
+		        	label: '45分',
+		            value: 45
+		        },{
+		        	label: '46分',
+		            value: 46
+		        },{
+		        	label: '47分',
+		            value: 47
+		        },{
+		        	label: '48分',
+		            value: 48
+		        },{
+		        	label: '49',
+		            value: 49
+		        },{
+		        	label: '38分',
+		            value: 38
+		        },{
+		        	label: '50分',
+		            value: 50
+		        },{
+		        	label: '51分',
+		            value: 51
+		        },{
+		        	label: '52分',
+		            value: 52
+		        },{
+		        	label: '53分',
+		            value: 53
+		        },{
+		        	label: '54分',
+		            value: 54
+		        },{
+		        	label: '55分',
+		            value: 55
+		        },{
+		        	label: '56分',
+		            value: 56
+		        },{
+		        	label: '57分',
+		            value: 57
+		        },{
+		        	label: '58分',
+		            value: 58
+		        },{
+		        	label: '59分',
+		            value: 59
+		        }],
+		        [{
+		            label: '00秒',
+		            value: 0
+		        }, {
+		            label: '01秒',
+		            value: 1
+		        }, {
+		            label: '02秒',
+		            value: 2
+		        },{
+		            label: '03秒',
+		            disabled: true,
+		            value: 3
+		        },{
+		        	label: '04秒',
+		            value: 4
+		        },{
+		        	label: '05秒',
+		            value: 5
+		        },{
+		        	label: '06秒',
+		            value: 6
+		        },{
+		        	label: '07秒',
+		            value: 7
+		        },{
+		        	label: '08秒',
+		            value: 8
+		        },{
+		        	label: '09秒',
+		            value: 9
+		        },{
+		        	label: '10秒',
+		            value: 10
+		        },{
+		        	label: '11秒',
+		            value: 11
+		        },{
+		        	label: '12秒',
+		            value: 12
+		        },{
+		        	label: '13秒',
+		            value: 13
+		        },{
+		        	label: '14秒',
+		            value: 14
+		        },{
+		        	label: '15秒',
+		            value: 15
+		        },{
+		        	label: '16秒',
+		            value: 16
+		        },{
+		        	label: '17秒',
+		            value: 17
+		        },{
+		        	label: '18秒',
+		            value: 18
+		        },{
+		        	label: '19秒',
+		            value: 19
+		        },{
+		        	label: '20秒',
+		            value: 20
+		        },{
+		        	label: '21秒',
+		            value: 21
+		        },{
+		        	label: '22秒',
+		            value: 22
+		        },{
+		        	label: '23秒',
+		            value: 23
+		        },{
+		        	label: '24秒',
+		            value: 24
+		        },{
+		        	label: '25秒',
+		            value: 25
+		        },{
+		        	label: '26秒',
+		            value: 26
+		        },{
+		        	label: '27秒',
+		            value: 27
+		        },{
+		        	label: '28秒',
+		            value: 28
+		        },{
+		        	label: '29秒',
+		            value: 29
+		        },{
+		        	label: '30秒',
+		            value: 30
+		        },{
+		        	label: '31秒',
+		            value: 31
+		        },{
+		        	label: '32秒',
+		            value: 32
+		        },{
+		        	label: '33秒',
+		            value: 33
+		        },{
+		        	label: '34秒',
+		            value: 34
+		        },{
+		        	label: '35秒',
+		            value: 35
+		        },{
+		        	label: '36秒',
+		            value: 36
+		        },{
+		        	label: '37秒',
+		            value: 37
+		        },{
+		        	label: '38秒',
+		            value: 38
+		        },{
+		        	label: '39秒',
+		            value: 39
+		        },{
+		        	label: '40秒',
+		            value: 40
+		        },{
+		        	label: '41秒',
+		            value: 41
+		        },{
+		        	label: '42秒',
+		            value: 42
+		        },{
+		        	label: '43秒',
+		            value: 43
+		        },{
+		        	label: '44秒',
+		            value: 44
+		        },{
+		        	label: '45秒',
+		            value: 45
+		        },{
+		        	label: '46秒',
+		            value: 46
+		        },{
+		        	label: '47秒',
+		            value: 47
+		        },{
+		        	label: '48秒',
+		            value: 48
+		        },{
+		        	label: '49秒',
+		            value: 49
+		        },{
+		        	label: '38秒',
+		            value: 38
+		        },{
+		        	label: '50秒',
+		            value: 50
+		        },{
+		        	label: '51秒',
+		            value: 51
+		        },{
+		        	label: '52秒',
+		            value: 52
+		        },{
+		        	label: '53秒',
+		            value: 53
+		        },{
+		        	label: '54秒',
+		            value: 54
+		        },{
+		        	label: '55秒',
+		            value: 55
+		        },{
+		        	label: '56秒',
+		            value: 56
+		        },{
+		        	label: '57秒',
+		            value: 57
+		        },{
+		        	label: '58秒',
+		            value: 58
+		        },{
+		        	label: '59秒',
+		            value: 59
+		        }],
+		         {
+		            onChange: function (result) {
+
+		            },
+		            onConfirm: function (result) {
+		            	if(result[0]<10)
+		            	{
+		            		result[0]='0'+result[0];
+		            	}
+		            	if(result[1]<10)
+		            	{
+		            		result[1]='0'+result[1];
+		            	}
+		            	if(parseInt(result[2])<10)
+		            	{
+		            		result[2]='0'+result[2];
+		            	}
+		            	if(document.getElementById('showDatePicker_on_value').value==document.getElementById('showDatePicker_end_value').value)
+		            	{
+		            		for(k=0;k<3;k++)
+			            	{
+			            		if(parseInt(result[k])>parseInt(data2[k]))
+			            		{
+			            			document.getElementById('err_massare').innerHTML="开始时间迟于结束时间";
+			            			document.getElementById('showAndroidDialog2').click();
+			            			return;
+			            		}
+			            		if(parseInt(result[k])<parseInt(data2[k]))
+			            		{
+			            			break;
+			            		}
+			            	}
+		            	}
+		                document.getElementById('showDatePicker_on2_value').value=result[0]+':'+result[1]+':'+result[2];
+		            }
+		        });
+		    });
+			$('.showDatePicker_end').on('click', function () {
+				data=get_date(document.getElementById('showDatePicker_on_value'));
+				document.getElementById('showDatePicker_on_value').setAttribute('time','end');
+		        weui.datePicker({
+		            start: new Date().getFullYear(),
+		            end: 2050,
+		            onChange: function (result) {
+		               
+		            },
+		            onConfirm: function (result) {
+		                if(result[1]<10)
+		            	{
+		            		result[1]='0'+result[1];
+		            	}
+		            	if(result[2]<10)
+		            	{
+		            		result[2]='0'+result[2];
+		            	}
+		            	for(k=0;k<3;k++)
+		            	{
+		            		if(parseInt(result[k])<parseInt(data[k]))
+		            		{
+		            			document.getElementById('err_massare').innerHTML="开始日期迟于结束日期";
+		            			document.getElementById('showAndroidDialog2').click();
+		            			return;
+		            		}
+		            		if(parseInt(result[k])>parseInt(data[k]))
+		            		{
+		            			break;
+		            		}
+		            	}
+		            	if(parseInt(result[0])==parseInt(data[0])&&parseInt(result[1])==parseInt(data[1])&&parseInt(result[2])==parseInt(data[2]))
+		            	{
+		            		on2time=get_date2(document.getElementById('showDatePicker_on2_value'));
+		            		end2time=get_date2(document.getElementById('showDatePicker_end2_value'));
+		            		for(k=0;k<3;k++)
+			            	{
+			            		if(parseInt(on2time[k])>parseInt(end2time[k]))
+			            		{
+			            			document.getElementById('err_massare').innerHTML="开始时间迟于结束时间";
+			            			document.getElementById('showDatePicker_on_value').setAttribute('time','end2');
+			            			document.getElementById('showDatePicker_end_value').value=result[0]+'-'+result[1]+'-'+result[2];
+			            			document.getElementById('showAndroidDialog2').click();
+			            			return;
+			            		}
+			            		if(parseInt(on2time[k])<parseInt(end2time[k]))
+			            		{
+			            			break;
+			            		}
+			            	}
+		            	}
+		                document.getElementById('showDatePicker_end_value').value=result[0]+'-'+result[1]+'-'+result[2];
+		            }
+		        });
+			});
+		    $('.showDatePicker_end2').on('click', function () {
+		    	data2=get_date2(document.getElementById('showDatePicker_on2_value'));
+		    	document.getElementById('showDatePicker_on_value').setAttribute('time','end2');
+		        weui.picker([{
+		            label: '00时',
+		            value: 0
+		        }, {
+		            label: '01时',
+		            value: 1
+		        }, {
+		            label: '02时',
+		            value: 2
+		        },{
+		            label: '03时',
+		            disabled: true,
+		            value: 3
+		        },{
+		        	label: '04时',
+		            value: 4
+		        },{
+		        	label: '05时',
+		            value: 5
+		        },{
+		        	label: '06时',
+		            value: 6
+		        },{
+		        	label: '07时',
+		            value: 7
+		        },{
+		        	label: '08时',
+		            value: 8
+		        },{
+		        	label: '09时',
+		            value: 9
+		        },{
+		        	label: '10时',
+		            value: 10
+		        },{
+		        	label: '11时',
+		            value: 11
+		        },{
+		        	label: '12时',
+		            value: 12
+		        },{
+		        	label: '13时',
+		            value: 13
+		        },{
+		        	label: '14时',
+		            value: 14
+		        },{
+		        	label: '15时',
+		            value: 15
+		        },{
+		        	label: '16时',
+		            value: 16
+		        },{
+		        	label: '17时',
+		            value: 17
+		        },{
+		        	label: '18时',
+		            value: 18
+		        },{
+		        	label: '19时',
+		            value: 19
+		        },{
+		        	label: '20时',
+		            value: 20
+		        },{
+		        	label: '21时',
+		            value: 21
+		        },{
+		        	label: '22时',
+		            value: 22
+		        },{
+		        	label: '23时',
+		            value: 23
+		        }],
+		        [{
+		            label: '00分',
+		            value: 0
+		        }, {
+		            label: '01分',
+		            value: 1
+		        }, {
+		            label: '02分',
+		            value: 2
+		        },{
+		            label: '03分',
+		            disabled: true,
+		            value: 3
+		        },{
+		        	label: '04分',
+		            value: 4
+		        },{
+		        	label: '05分',
+		            value: 5
+		        },{
+		        	label: '06分',
+		            value: 6
+		        },{
+		        	label: '07分',
+		            value: 7
+		        },{
+		        	label: '08分',
+		            value: 8
+		        },{
+		        	label: '09分',
+		            value: 9
+		        },{
+		        	label: '10分',
+		            value: 10
+		        },{
+		        	label: '11分',
+		            value: 11
+		        },{
+		        	label: '12分',
+		            value: 12
+		        },{
+		        	label: '13分',
+		            value: 13
+		        },{
+		        	label: '14分',
+		            value: 14
+		        },{
+		        	label: '15分',
+		            value: 15
+		        },{
+		        	label: '16分',
+		            value: 16
+		        },{
+		        	label: '17分',
+		            value: 17
+		        },{
+		        	label: '18分',
+		            value: 18
+		        },{
+		        	label: '19分',
+		            value: 19
+		        },{
+		        	label: '20分',
+		            value: 20
+		        },{
+		        	label: '21分',
+		            value: 21
+		        },{
+		        	label: '22分',
+		            value: 22
+		        },{
+		        	label: '23分',
+		            value: 23
+		        },{
+		        	label: '24分',
+		            value: 24
+		        },{
+		        	label: '25分',
+		            value: 25
+		        },{
+		        	label: '26分',
+		            value: 26
+		        },{
+		        	label: '27分',
+		            value: 27
+		        },{
+		        	label: '28分',
+		            value: 28
+		        },{
+		        	label: '29分',
+		            value: 29
+		        },{
+		        	label: '30分',
+		            value: 30
+		        },{
+		        	label: '31分',
+		            value: 31
+		        },{
+		        	label: '32分',
+		            value: 32
+		        },{
+		        	label: '33分',
+		            value: 33
+		        },{
+		        	label: '34分',
+		            value: 34
+		        },{
+		        	label: '35分',
+		            value: 35
+		        },{
+		        	label: '36分',
+		            value: 36
+		        },{
+		        	label: '37分',
+		            value: 37
+		        },{
+		        	label: '38分',
+		            value: 38
+		        },{
+		        	label: '39分',
+		            value: 39
+		        },{
+		        	label: '40分',
+		            value: 40
+		        },{
+		        	label: '41分',
+		            value: 41
+		        },{
+		        	label: '42分',
+		            value: 42
+		        },{
+		        	label: '43分',
+		            value: 43
+		        },{
+		        	label: '44分',
+		            value: 44
+		        },{
+		        	label: '45分',
+		            value: 45
+		        },{
+		        	label: '46分',
+		            value: 46
+		        },{
+		        	label: '47分',
+		            value: 47
+		        },{
+		        	label: '48分',
+		            value: 48
+		        },{
+		        	label: '49分',
+		            value: 49
+		        },{
+		        	label: '38分',
+		            value: 38
+		        },{
+		        	label: '50分',
+		            value: 50
+		        },{
+		        	label: '51分',
+		            value: 51
+		        },{
+		        	label: '52分',
+		            value: 52
+		        },{
+		        	label: '53分',
+		            value: 53
+		        },{
+		        	label: '54分',
+		            value: 54
+		        },{
+		        	label: '55分',
+		            value: 55
+		        },{
+		        	label: '56分',
+		            value: 56
+		        },{
+		        	label: '57分',
+		            value: 57
+		        },{
+		        	label: '58分',
+		            value: 58
+		        },{
+		        	label: '59分',
+		            value: 59
+		        }],
+		        [{
+		            label: '00秒',
+		            value: 0
+		        }, {
+		            label: '01秒',
+		            value: 1
+		        }, {
+		            label: '02秒',
+		            value: 2
+		        },{
+		            label: '03秒',
+		            disabled: true,
+		            value: 3
+		        },{
+		        	label: '04秒',
+		            value: 4
+		        },{
+		        	label: '05秒',
+		            value: 5
+		        },{
+		        	label: '06秒',
+		            value: 6
+		        },{
+		        	label: '07秒',
+		            value: 7
+		        },{
+		        	label: '08秒',
+		            value: 8
+		        },{
+		        	label: '09秒',
+		            value: 9
+		        },{
+		        	label: '10秒',
+		            value: 10
+		        },{
+		        	label: '11秒',
+		            value: 11
+		        },{
+		        	label: '12秒',
+		            value: 12
+		        },{
+		        	label: '13秒',
+		            value: 13
+		        },{
+		        	label: '14秒',
+		            value: 14
+		        },{
+		        	label: '15秒',
+		            value: 15
+		        },{
+		        	label: '16秒',
+		            value: 16
+		        },{
+		        	label: '17秒',
+		            value: 17
+		        },{
+		        	label: '18秒',
+		            value: 18
+		        },{
+		        	label: '19秒',
+		            value: 19
+		        },{
+		        	label: '20秒',
+		            value: 20
+		        },{
+		        	label: '21秒',
+		            value: 21
+		        },{
+		        	label: '22秒',
+		            value: 22
+		        },{
+		        	label: '23秒',
+		            value: 23
+		        },{
+		        	label: '24秒',
+		            value: 24
+		        },{
+		        	label: '25秒',
+		            value: 25
+		        },{
+		        	label: '26秒',
+		            value: 26
+		        },{
+		        	label: '27秒',
+		            value: 27
+		        },{
+		        	label: '28秒',
+		            value: 28
+		        },{
+		        	label: '29秒',
+		            value: 29
+		        },{
+		        	label: '30秒',
+		            value: 30
+		        },{
+		        	label: '31秒',
+		            value: 31
+		        },{
+		        	label: '32秒',
+		            value: 32
+		        },{
+		        	label: '33秒',
+		            value: 33
+		        },{
+		        	label: '34秒',
+		            value: 34
+		        },{
+		        	label: '35秒',
+		            value: 35
+		        },{
+		        	label: '36秒',
+		            value: 36
+		        },{
+		        	label: '37秒',
+		            value: 37
+		        },{
+		        	label: '38秒',
+		            value: 38
+		        },{
+		        	label: '39秒',
+		            value: 39
+		        },{
+		        	label: '40秒',
+		            value: 40
+		        },{
+		        	label: '41秒',
+		            value: 41
+		        },{
+		        	label: '42秒',
+		            value: 42
+		        },{
+		        	label: '43秒',
+		            value: 43
+		        },{
+		        	label: '44秒',
+		            value: 44
+		        },{
+		        	label: '45秒',
+		            value: 45
+		        },{
+		        	label: '46秒',
+		            value: 46
+		        },{
+		        	label: '47秒',
+		            value: 47
+		        },{
+		        	label: '48秒',
+		            value: 48
+		        },{
+		        	label: '49秒',
+		            value: 49
+		        },{
+		        	label: '50秒',
+		            value: 50
+		        },{
+		        	label: '51秒',
+		            value: 51
+		        },{
+		        	label: '52秒',
+		            value: 52
+		        },{
+		        	label: '53秒',
+		            value: 53
+		        },{
+		        	label: '54秒',
+		            value: 54
+		        },{
+		        	label: '55秒',
+		            value: 55
+		        },{
+		        	label: '56秒',
+		            value: 56
+		        },{
+		        	label: '57秒',
+		            value: 57
+		        },{
+		        	label: '58秒',
+		            value: 58
+		        },{
+		        	label: '59秒',
+		            value: 59
+		        }],
+		         {
+		            onChange: function (result) {
+		                
+		            },
+		            onConfirm: function (result) {
+		            	if(result[0]<10)
+		            	{
+		            		result[0]='0'+result[0];
+		            	}
+		            	if(result[1]<10)
+		            	{
+		            		result[1]='0'+result[1];
+		            	}
+		            	if(parseInt(result[2])<10)
+		            	{
+		            		result[2]='0'+result[2];
+		            	}
+		            	if(document.getElementById('showDatePicker_on_value').value==document.getElementById('showDatePicker_end_value').value)
+		            	{
+		            		for(k=0;k<3;k++)
+			            	{
+			            		if(parseInt(result[k])<parseInt(data2[k]))
+			            		{
+			            			document.getElementById('err_massare').innerHTML="开始时间迟于结束时间";
+			            			document.getElementById('showAndroidDialog2').click();
+			            			return;
+			            		}
+			            		if(parseInt(result[k])<parseInt(data2[k]))
+			            		{
+			            			break;
+			            		}
+			            	}
+		            	}
+		                document.getElementById('showDatePicker_end2_value').value=result[0]+':'+result[1]+':'+result[2];
+		            }
+		        });
+		    });
+			$(function(){
+		        var $androidDialog2 = $('#androidDialog2');
+
+		        $('#dialogs').on('click', '.weui-dialog__btn', function(){
+		            $(this).parents('.js_dialog').fadeOut(200);
+		        });
+		        $('#showAndroidDialog2').on('click', function(){
+		            $androidDialog2.fadeIn(200);
+		        });
+		    });
+			$('.del-label').on('click',function(){
+				th=this.parentNode.parentNode;
+				th.parentNode.removeChild(th);
+			});
+			$('.add-label').on('click',function(){
+				alllabel=document.getElementById("label-box");
+				newlabel=document.createElement("div");
+				newlabel.setAttribute("class", "weui-cell");
+				newlabel.innerHTML="<div class='weui-cell__hd'><label class='weui-btn weui-btn_mini weui-btn_warn del-label' style='text-align: center;width: 30px;height: 30px;padding: 0;line-height: 30px;color: #fff;'>一</label></div><div class='weui-cell__bd'><input class='weui-input' type='text' pattern='' placeholder='选项'></div>"
+				alllabel.appendChild(newlabel);
+				$('.del-label').on('click',function(){
+					th=this.parentNode.parentNode;
+					th.parentNode.removeChild(th);
+				});
+			});
+			function get_date(obj)
+			{
+				data = new Array();
+				data[0]=obj.value[0]+obj.value[1]+obj.value[2]+obj.value[3];
+				data[1]=obj.value[5]+obj.value[6];
+				data[2]=obj.value[8]+obj.value[9];
+				return data;
+			}
+			function get_date2(obj)
+			{
+				data2 = new Array();
+				data2[0]=obj.value[0]+obj.value[1];
+				data2[1]=obj.value[3]+obj.value[4];
+				data2[2]=obj.value[6]+obj.value[7];
+				return data2;
+			}
+			function modify()
+		    {
+		    	$('.showDatePicker_'+document.getElementById('showDatePicker_on_value').getAttribute('time')).click();
+		    }
+		</script>
+    	<script src="script/example.js"></script>
+	    <script type="text/javascript" src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+	    <script src="https://res.wx.qq.com/open/libs/weuijs/1.0.0/weui.min.js"></script>
+	</div>
+</body>
+</html>
