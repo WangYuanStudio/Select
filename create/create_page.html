@@ -9,7 +9,7 @@
 	<script src="script/zepto.min.js"></script>
 </head>
 <body ontouchstart="">
-    <div class="container" id="container">
+    <div class="container" id="container" style="position: relative;min-height: 100vh">
     	<div class="weui-cell">
             <div class="weui-cell__hd">
             	<label class="weui-label">投票名称</label>
@@ -77,18 +77,13 @@
             </div>
         </div>
         <a href="javascript:;" class="weui-btn weui-btn_primary" style="width: 80%;">发布并分享</a>
-        <div class="page__ft" style="padding-top: 40px;padding-bottom: 10px;text-align: center;">
-        	<a href="javascript:home()">网园资讯工作室</a>
-    	</div>
+        <p class="bx-copyright" style="text-align: center;position: relative;bottom: 0;width: 100%;margin: 40px 0 10px 0">©&nbsp;网园资讯工作室</p>
     	<div class="weui-mask" id="mask" style="opacity: 0;display: none;">
     		
     	</div>
         <a href="javascript:;" style="display: none;" class="weui-btn weui-btn_default" id="showAndroidDialog2"></a>
-        <div id="dialogs" style="z-index: 9999999">
-	        <div class="js_dialog" id="androidDialog2" style="opacity: 0; display: none;">
-<!-- 	            <div class="weui-mask">
-	            	
-	            </div> -->
+        <div id="dialogs">
+	        <div class="js_dialog" id="androidDialog2" style="opacity: 1; display: none;">
 	            <div class="weui-dialog weui-skin_android">
 	                <div class="weui-dialog__bd" id="err_massare">
 	                    开始时间迟于结束时间
@@ -102,8 +97,14 @@
         </div>
         <script type="text/javascript" class="picker js_show">
 		    $('.showDatePicker_on').on('click', function () {
+		    	document.getElementById('mask').style.display='';
+		    	$('#mask').animate({"opacity":"1"},200);
 		    	data=get_date(document.getElementById('showDatePicker_end_value'));
 		    	document.getElementById('showDatePicker_on_value').setAttribute('time','on');
+		    	$('#mask').on('click',function(){
+					$('#mask').animate({"opacity":"0"},200);
+			        setTimeout("document.getElementById('mask').style.display='none'",200);
+				});
 		        weui.datePicker({
 		            start: new Date().getFullYear(),
 		            end: 2050,
@@ -124,8 +125,6 @@
 		            		if(parseInt(result[k])>parseInt(data[k]))
 		            		{
 		            			document.getElementById('err_massare').innerHTML="开始日期迟于结束日期";
-		            			document.getElementById('mask').style.display='';
-		            			$('#mask').animate({"opacity":"1"},200);
 		            			document.getElementById('showAndroidDialog2').click();
 		            			return;
 		            		}
@@ -145,8 +144,6 @@
 			            			document.getElementById('err_massare').innerHTML="开始时间迟于结束时间";
 			            			document.getElementById('showDatePicker_on_value').setAttribute('time','on2');
 			            			document.getElementById('showDatePicker_on_value').value=result[0]+'-'+result[1]+'-'+result[2];
-			            			document.getElementById('mask').style.display='';
-		            				$('#mask').animate({"opacity":"1"},200);
 			            			document.getElementById('showAndroidDialog2').click();
 			            			return;
 			            		}
@@ -156,8 +153,8 @@
 			            		}
 			            	}
 		            	}
-		            	document.getElementById('mask').style.display='none';
 		        		$('#mask').animate({"opacity":"0"},200);
+		        		setTimeout("document.getElementById('mask').style.display='none'",200);
 		            	document.getElementById('showDatePicker_on_value').value=result[0]+'-'+result[1]+'-'+result[2];
 		            }
 		        });
@@ -165,6 +162,12 @@
 		    $('.showDatePicker_on2').on('click', function () {
 		    	data2=get_date2(document.getElementById('showDatePicker_end2_value'));
 		    	document.getElementById('showDatePicker_on_value').setAttribute('time','on2');
+		    	document.getElementById('mask').style.display='';
+		    	$('#mask').animate({"opacity":"1"},200);
+		    	$('#mask').on('click',function(){
+					$('#mask').animate({"opacity":"0"},200);
+			        setTimeout("document.getElementById('mask').style.display='none'",200);
+				});
 		        weui.picker([{
 		            label: '00时',
 		            value: 0
@@ -633,8 +636,6 @@
 			            		if(parseInt(result[k])>parseInt(data2[k]))
 			            		{
 			            			document.getElementById('err_massare').innerHTML="开始时间迟于结束时间";
-			            			document.getElementById('mask').style.display='';
-		            				$('#mask').animate({"opacity":"1"},200);
 			            			document.getElementById('showAndroidDialog2').click();
 			            			return;
 			            		}
@@ -644,8 +645,8 @@
 			            		}
 			            	}
 		            	}
-		            	document.getElementById('mask').style.display='none';
-		        		$('#mask').animate({"opacity":"0"},200);
+		            	$('#mask').animate({"opacity":"0"},200);
+		        		setTimeout("document.getElementById('mask').style.display='none'",200);
 		                document.getElementById('showDatePicker_on2_value').value=result[0]+':'+result[1]+':'+result[2];
 		            }
 		        });
@@ -653,6 +654,12 @@
 			$('.showDatePicker_end').on('click', function () {
 				data=get_date(document.getElementById('showDatePicker_on_value'));
 				document.getElementById('showDatePicker_on_value').setAttribute('time','end');
+				document.getElementById('mask').style.display='';
+		    	$('#mask').animate({"opacity":"1"},200);
+		    	$('#mask').on('click',function(){
+					$('#mask').animate({"opacity":"0"},200);
+			        setTimeout("document.getElementById('mask').style.display='none'",200);
+				});
 		        weui.datePicker({
 		            start: new Date().getFullYear(),
 		            end: 2050,
@@ -673,8 +680,6 @@
 		            		if(parseInt(result[k])<parseInt(data[k]))
 		            		{
 		            			document.getElementById('err_massare').innerHTML="开始日期迟于结束日期";
-		            			document.getElementById('mask').style.display='';
-		            			$('#mask').animate({"opacity":"1"},200);
 		            			document.getElementById('showAndroidDialog2').click();
 		            			return;
 		            		}
@@ -694,8 +699,6 @@
 			            			document.getElementById('err_massare').innerHTML="开始时间迟于结束时间";
 			            			document.getElementById('showDatePicker_on_value').setAttribute('time','end2');
 			            			document.getElementById('showDatePicker_end_value').value=result[0]+'-'+result[1]+'-'+result[2];
-			            			document.getElementById('mask').style.display='';
-		            				$('#mask').animate({"opacity":"1"},200);
 			            			document.getElementById('showAndroidDialog2').click();
 			            			return;
 			            		}
@@ -705,8 +708,8 @@
 			            		}
 			            	}
 		            	}
-		            	document.getElementById('mask').style.display='none';
-		        		$('#mask').animate({"opacity":"0"},200);
+		            	$('#mask').animate({"opacity":"0"},200);
+		        		setTimeout("document.getElementById('mask').style.display='none'",200);
 		                document.getElementById('showDatePicker_end_value').value=result[0]+'-'+result[1]+'-'+result[2];
 		            }
 		        });
@@ -714,6 +717,12 @@
 		    $('.showDatePicker_end2').on('click', function () {
 		    	data2=get_date2(document.getElementById('showDatePicker_on2_value'));
 		    	document.getElementById('showDatePicker_on_value').setAttribute('time','end2');
+		    	document.getElementById('mask').style.display='';
+		    	$('#mask').animate({"opacity":"1"},200);
+		    	$('#mask').on('click',function(){
+					$('#mask').animate({"opacity":"0"},200);
+			        setTimeout("document.getElementById('mask').style.display='none'",200);
+				});
 		        weui.picker([{
 		            label: '00时',
 		            value: 0
@@ -1179,8 +1188,6 @@
 			            		if(parseInt(result[k])<parseInt(data2[k]))
 			            		{
 			            			document.getElementById('err_massare').innerHTML="开始时间迟于结束时间";
-			            			document.getElementById('mask').style.display='';
-		            				$('#mask').animate({"opacity":"1"},200);
 			            			document.getElementById('showAndroidDialog2').click();
 			            			return;
 			            		}
@@ -1190,8 +1197,8 @@
 			            		}
 			            	}
 		            	}
-		            	document.getElementById('mask').style.display='none';
-		        		$('#mask').animate({"opacity":"0"},200);
+		            	$('#mask').animate({"opacity":"0"},200);
+		        		setTimeout("document.getElementById('mask').style.display='none'",200);
 		                document.getElementById('showDatePicker_end2_value').value=result[0]+':'+result[1]+':'+result[2];
 		            }
 		        });
@@ -1244,7 +1251,7 @@
 		    function nomodify()
 		    {
 		    	document.getElementById('mask').style.display='none';
-		        $('#mask').animate({"opacity":"0"},200);
+		        document.getElementById('mask').style.opacity='0';
 		    }
 		</script>
     	<script src="script/example.js"></script>
