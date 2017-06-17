@@ -24,7 +24,7 @@
             </div>
             <div class="weui-cell__bd" style="position: relative;">
                 <input id="showDatePicker_on_value" class="weui-input" type="date" value="" placeholder="" time="on">
-                <input id="showDatePicker_on2_value" class="weui-input" style="position: absolute;top: 50%;transform: translateY(-50%); right: 0;width: 70px" type="" value="--:--:--" placeholder="">
+                <input id="showDatePicker_on2_value" class="weui-input" style="position: absolute;top: 50%;transform: translateY(-50%); right: 0;width: 70px" type="" value="00:00:00" placeholder="">
             </div>
             <div class="showDatePicker_on" style="position: absolute; height: 100%;left: 0; width:calc(100% - 9rem);background-color: transparent;">
             </div>
@@ -37,7 +37,7 @@
             </div>
             <div class="weui-cell__bd" style="position: relative;">
                 <input id="showDatePicker_end_value" class="weui-input" type="date" value="" placeholder="">
-                <input id="showDatePicker_end2_value" class="weui-input" style="position: absolute;top: 50%;transform: translateY(-50%); right: 0;width: 70px" type="" value="--:--:--" placeholder="">
+                <input id="showDatePicker_end2_value" class="weui-input" style="position: absolute;top: 50%;transform: translateY(-50%); right: 0;width: 70px" type="" value="23:59:59" placeholder="">
             </div>
             <div class="showDatePicker_end" style="position: absolute; height: 100%;left: 0; width:calc(100% - 9rem);background-color: transparent;">
             </div>
@@ -80,18 +80,21 @@
         <div class="page__ft" style="padding-top: 40px;padding-bottom: 10px;text-align: center;">
         	<a href="javascript:home()">网园资讯工作室</a>
     	</div>
+    	<div class="weui-mask" id="mask" style="opacity: 0;display: none;">
+    		
+    	</div>
         <a href="javascript:;" style="display: none;" class="weui-btn weui-btn_default" id="showAndroidDialog2"></a>
-        <div id="dialogs">
+        <div id="dialogs" style="z-index: 9999999">
 	        <div class="js_dialog" id="androidDialog2" style="opacity: 0; display: none;">
-	            <div class="weui-mask">
+<!-- 	            <div class="weui-mask">
 	            	
-	            </div>
+	            </div> -->
 	            <div class="weui-dialog weui-skin_android">
 	                <div class="weui-dialog__bd" id="err_massare">
 	                    开始时间迟于结束时间
 	                </div>
 	                <div class="weui-dialog__ft">
-	                    <a href="javascript:;" class="weui-dialog__btn weui-dialog__btn_default">取消</a>
+	                    <a href="javascript:nomodify();" class="weui-dialog__btn weui-dialog__btn_default">取消</a>
 	                    <a href="javascript:modify();" class="weui-dialog__btn weui-dialog__btn_primary">重新选择</a>
 	                </div>
 	            </div>
@@ -121,6 +124,8 @@
 		            		if(parseInt(result[k])>parseInt(data[k]))
 		            		{
 		            			document.getElementById('err_massare').innerHTML="开始日期迟于结束日期";
+		            			document.getElementById('mask').style.display='';
+		            			$('#mask').animate({"opacity":"1"},200);
 		            			document.getElementById('showAndroidDialog2').click();
 		            			return;
 		            		}
@@ -140,6 +145,8 @@
 			            			document.getElementById('err_massare').innerHTML="开始时间迟于结束时间";
 			            			document.getElementById('showDatePicker_on_value').setAttribute('time','on2');
 			            			document.getElementById('showDatePicker_on_value').value=result[0]+'-'+result[1]+'-'+result[2];
+			            			document.getElementById('mask').style.display='';
+		            				$('#mask').animate({"opacity":"1"},200);
 			            			document.getElementById('showAndroidDialog2').click();
 			            			return;
 			            		}
@@ -149,6 +156,8 @@
 			            		}
 			            	}
 		            	}
+		            	document.getElementById('mask').style.display='none';
+		        		$('#mask').animate({"opacity":"0"},200);
 		            	document.getElementById('showDatePicker_on_value').value=result[0]+'-'+result[1]+'-'+result[2];
 		            }
 		        });
@@ -624,6 +633,8 @@
 			            		if(parseInt(result[k])>parseInt(data2[k]))
 			            		{
 			            			document.getElementById('err_massare').innerHTML="开始时间迟于结束时间";
+			            			document.getElementById('mask').style.display='';
+		            				$('#mask').animate({"opacity":"1"},200);
 			            			document.getElementById('showAndroidDialog2').click();
 			            			return;
 			            		}
@@ -633,6 +644,8 @@
 			            		}
 			            	}
 		            	}
+		            	document.getElementById('mask').style.display='none';
+		        		$('#mask').animate({"opacity":"0"},200);
 		                document.getElementById('showDatePicker_on2_value').value=result[0]+':'+result[1]+':'+result[2];
 		            }
 		        });
@@ -660,6 +673,8 @@
 		            		if(parseInt(result[k])<parseInt(data[k]))
 		            		{
 		            			document.getElementById('err_massare').innerHTML="开始日期迟于结束日期";
+		            			document.getElementById('mask').style.display='';
+		            			$('#mask').animate({"opacity":"1"},200);
 		            			document.getElementById('showAndroidDialog2').click();
 		            			return;
 		            		}
@@ -679,6 +694,8 @@
 			            			document.getElementById('err_massare').innerHTML="开始时间迟于结束时间";
 			            			document.getElementById('showDatePicker_on_value').setAttribute('time','end2');
 			            			document.getElementById('showDatePicker_end_value').value=result[0]+'-'+result[1]+'-'+result[2];
+			            			document.getElementById('mask').style.display='';
+		            				$('#mask').animate({"opacity":"1"},200);
 			            			document.getElementById('showAndroidDialog2').click();
 			            			return;
 			            		}
@@ -688,6 +705,8 @@
 			            		}
 			            	}
 		            	}
+		            	document.getElementById('mask').style.display='none';
+		        		$('#mask').animate({"opacity":"0"},200);
 		                document.getElementById('showDatePicker_end_value').value=result[0]+'-'+result[1]+'-'+result[2];
 		            }
 		        });
@@ -1160,6 +1179,8 @@
 			            		if(parseInt(result[k])<parseInt(data2[k]))
 			            		{
 			            			document.getElementById('err_massare').innerHTML="开始时间迟于结束时间";
+			            			document.getElementById('mask').style.display='';
+		            				$('#mask').animate({"opacity":"1"},200);
 			            			document.getElementById('showAndroidDialog2').click();
 			            			return;
 			            		}
@@ -1169,6 +1190,8 @@
 			            		}
 			            	}
 		            	}
+		            	document.getElementById('mask').style.display='none';
+		        		$('#mask').animate({"opacity":"0"},200);
 		                document.getElementById('showDatePicker_end2_value').value=result[0]+':'+result[1]+':'+result[2];
 		            }
 		        });
@@ -1217,6 +1240,11 @@
 			function modify()
 		    {
 		    	$('.showDatePicker_'+document.getElementById('showDatePicker_on_value').getAttribute('time')).click();
+		    }
+		    function nomodify()
+		    {
+		    	document.getElementById('mask').style.display='none';
+		        $('#mask').animate({"opacity":"0"},200);
 		    }
 		</script>
     	<script src="script/example.js"></script>
