@@ -1,0 +1,23 @@
+*{
+	margin: 0;
+	padding: 0;
+}
+body{
+	font-size: 62.5%;
+}
+.data-time{
+	padding-left: 1rem;
+	font-size: 0.6rem;
+}
+.data-time p{
+	margin-top: 0.5rem;
+}
+.confirm-btn{
+	margin-top: 3rem;
+}
+.share{
+	margin: 1rem auto;
+}
+.share a:link{
+	color: #000;
+}
